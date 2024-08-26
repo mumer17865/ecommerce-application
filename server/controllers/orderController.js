@@ -5,22 +5,21 @@ const sequelize = require('../sequelize');
 exports.checkout = async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
-    const { cartItems, customerInfo } = req.body;
+    const { cartItems, customerInfo, subTotal, grandTotal} = req.body;
 
     if (!cartItems || cartItems.length === 0) {
       throw new Error('Cart is empty.');
     }
-
-    const totalSum = cartItems.reduce((sum, item) => sum + item.total, 0);
-
+    console.log(req.body);
     const orderData = {
-      name: customerInfo.name,
-      email: customerInfo.email,
-      contact: customerInfo.contact,
-      total: totalSum,
-      shippingAddress: customerInfo.address,
+      userId: customerInfo[0].id,
+      name: customerInfo[0].name,
+      email: customerInfo[0].email,
+      contact: customerInfo[0].contact,
+      total: subTotal,
+      shippingAddress: customerInfo[0].address,
     };
-
+    
     const createdOrder = await Order.create(orderData, { transaction });
 
     const createdOrderId = createdOrder.dataValues?.id;

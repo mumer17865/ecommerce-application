@@ -6,6 +6,7 @@ const sequelize = require('./sequelize');
 const app = express();
 const verifyToken = require('./middlewares/authMiddleware');
 
+
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
@@ -15,6 +16,10 @@ app.use(cors());
 app.use('/auth', require('./routes/authRoutes'));
 app.use('/products', require('./routes/productRoutes'));
 app.use('/orders', require('./routes/orderRoutes'));
+app.use('/getHistory', require('./routes/historyRoutes'));
+app.use(require('./routes/bsecureAuth'));
+app.use(require('./routes/bsecureOrderRoutes'));
+
 
 app.get('/authenticated', verifyToken, (req, res) => {
   res.json({ success: true, message: 'Access granted' });

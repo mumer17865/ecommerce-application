@@ -1,11 +1,22 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../sequelize');
 
+const Data = require('./data');
+
 const Order = sequelize.define('Order', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Data,
+      key: 'id',
+    },
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
   },
   name: {
     type: DataTypes.STRING,

@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     if (!token) {
       if (state.url === '/login' || state.url === '/registeruser') {
@@ -55,7 +55,7 @@ export class AuthGuard implements CanActivate {
   private setupAxiosInterceptors() {
     // Request interceptor
     axios.interceptors.request.use(function (config) {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -69,7 +69,7 @@ export class AuthGuard implements CanActivate {
       return response;
     }, function (error) {
       if (error.response && error.response.status === 401) {
-        localStorage.clear();
+        sessionStorage.clear();
         window.location.href = '/login';
       }
       return Promise.reject(error);

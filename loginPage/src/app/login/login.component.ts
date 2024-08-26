@@ -24,7 +24,7 @@ export class LoginComponent{
     })
     .then((response) => {
       if (response.data.success) {
-        localStorage.setItem('token', response.data.token);
+        sessionStorage.setItem('token', response.data.token);
         this.router.navigate(['./dashboard']);
       } else {
         alert('Username or password is incorrect');

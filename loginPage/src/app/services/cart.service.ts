@@ -10,7 +10,7 @@ export class CartService {
   constructor() { }
 
   getCartItems(): any[] {
-    const storedItems = localStorage.getItem(this.storageKey);
+    const storedItems = sessionStorage.getItem(this.storageKey);
     return storedItems ? JSON.parse(storedItems) : [];
   }
 
@@ -20,12 +20,12 @@ export class CartService {
   }
 
   getProducts(): any[] {
-    const storedProducts = localStorage.getItem(this.productsKey);
+    const storedProducts = sessionStorage.getItem(this.productsKey);
     return storedProducts ? JSON.parse(storedProducts) : [];
   }
 
   setCartItems(items: any[]) {
-    localStorage.setItem(this.storageKey, JSON.stringify(items));
+    sessionStorage.setItem(this.storageKey, JSON.stringify(items));
   }
 
 
@@ -43,7 +43,7 @@ export class CartService {
   }
 
   clearCart() {
-    localStorage.removeItem(this.storageKey);
+    sessionStorage.removeItem(this.storageKey);
   }
 
   updateQuantity(productId: number, quantity: number) {
@@ -63,6 +63,6 @@ export class CartService {
   }
 
   private saveCartItems(items: any[]): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(items));
+    sessionStorage.setItem(this.storageKey, JSON.stringify(items));
   }
 }

@@ -11,7 +11,7 @@ export class PkrCurrencyPipe implements PipeTransform {
 
   transform(value: number, ...args: unknown[]): string {
     if (value !== undefined && value !== null) {
-      return `₨ ` + value.toFixed(0); // format as PKR with two decimal places
+      return `₨ ` + value // format as PKR with two decimal places
     }
     return `₨ 0.00`;
   }

@@ -10,18 +10,18 @@ interface Product {
   productId: number;
   productName: string;
   desc: string;
-  image: string;
-  price: number;
-  quantity: number;
+  image: any;
+  price: any;
+  quantity: any;
   createdAt: string;
   updatedAt: string;
-  display: boolean ;
+  display: boolean;
 }
 
 @Component({
-  standalone:true,
-  providers:[CurrencyPipe],
-  imports:[PkrCurrencyPipe, FormsModule],
+  standalone: true,
+  providers: [CurrencyPipe],
+  imports: [PkrCurrencyPipe, FormsModule],
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
   styleUrls: ['./productdetails.component.css']
@@ -30,38 +30,45 @@ export class ProductdetailsComponent implements OnInit {
   quat = 1;
   cartItems: any[] = [];
   showCartItem: boolean = false;
+  Item: Product | undefined;
   ItemList: Product[] = [];
-  constructor(private route: ActivatedRoute, private CurrencyPipe: CurrencyPipe, private cartService: CartService) {}
 
-decrement() {
-  if(this.quat>1){
-  this.quat--;
-}}
-increment() {
- this.quat++;
-}
-  productId: number | undefined;
-  Item: Product[] = [];
+  constructor(
+    private route: ActivatedRoute,
+    private CurrencyPipe: CurrencyPipe,
+    private cartService: CartService
+  ) {}
+
+  decrement() {
+    if (this.quat > 1) {
+      this.quat--;
+    }
+  }
+
+  increment() {
+    this.quat++;
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.productId = +params['id']; // The '+' operator converts the string to a number
-      console.log('Product ID:', this.productId);
-    });
-    axios.get(`http://localhost:3000/products/itemList/${this.productId}`)
-    .then((response) => {
-      this.Item = response.data;
-      console.log(this.Item);
-    })
-    .catch((error) => {
-      console.log(error);
+      const productId = +params['id']; // The '+' operator converts the string to a number
+      this.fetchProductDetails(productId);
     });
   }
 
-  increment1(productId: number, quantity: number): void {
-    const product = this.Item.find(p => p.productId === productId);
-    if (product) {
-      this.cartService.addToCart(productId, quantity);
+  fetchProductDetails(productId: number) {
+    axios.get(`http://localhost:3000/products/itemList/${productId}`)
+      .then((response) => {
+        this.Item = response.data[0];
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  increment1(): void {
+    if (this.Item) {
+      this.cartService.addToCart(this.Item.productId, this.quat);
       this.loadCartItems(); // Reload cart items to update the view
     }
   }
@@ -77,9 +84,8 @@ increment() {
     }).filter(item => item !== null);
     this.updateShowCartItem();
   }
+
   updateShowCartItem() {
     this.showCartItem = this.cartItems.length > 0;
   }
-
-  
 }

@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private cartService: CartService, private renderer: Renderer2) {}
 
   ngOnInit() {
-    this.token = localStorage.getItem('token') ?? '';
+    this.token = sessionStorage.getItem('token') ?? '';
     if (this.token) {
       const arrayToken = this.token.split('.');
       const tokenPayload = JSON.parse(atob(arrayToken[1]));
@@ -107,7 +107,7 @@ export class DashboardComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/login']);
   }
 

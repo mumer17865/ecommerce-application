@@ -21,6 +21,7 @@ import { PkrCurrencyPipe } from "../pkr-currency.pipe";
 export class CheckoutComponent implements OnInit {
   deliveryCharge = 199;
   cartItems: any[] = [];
+  id: any;
   name: any;
   contact: any;
   email: any;
@@ -28,16 +29,29 @@ export class CheckoutComponent implements OnInit {
   ins: any;
   time: any;
   showCartItem: boolean = false;
+  Payload: any;
+  token: string = '';
 
   constructor(private CurrencyPipe: CurrencyPipe, private cartService: CartService, private router: Router) {}
 
   ngOnInit() {
+    this.token = sessionStorage.getItem('token') ?? '';
+    if (this.token) {
+      const arrayToken = this.token.split('.');
+      const tokenPayload = JSON.parse(atob(arrayToken[1]));
+      this.Payload = tokenPayload;
+    }
+    console.log(this.token);
     this.loadCartItems();
     this.updateShowCartItem();
+    this.name=this.Payload.Name;
+    this.email=this.Payload.Email;
+    this.id=this.Payload.id;
+    console.log(this.id);
   }
 
   clearCart() {
-    this.cartService.clearCart();
+    // this.cartService.clearCart();
     this.updateShowCartItem();
   }
 
@@ -49,11 +63,17 @@ export class CheckoutComponent implements OnInit {
   }
 
   getSubtotal(): number {
-    return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    let subTotal =0;
+    subTotal = this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    sessionStorage.setItem('subtotal', subTotal.toString());
+    return subTotal
   }
 
   getGrandTotal(): number {
-    return this.getSubtotal() + this.deliveryCharge;
+    let grandTotal =0;
+    grandTotal = this.getSubtotal() + this.deliveryCharge;
+    sessionStorage.setItem('grandtotal', grandTotal.toString());
+    return grandTotal;
   }
 
   updateShowCartItem() {
@@ -61,30 +81,67 @@ export class CheckoutComponent implements OnInit {
   }
 
   placeOrder() {
-    const orderData = {
-      cartItems: this.cartItems,
-      customerInfo: {
+    const orderData= [
+       {
+        id: this.id,
         name: this.name,
         contact: this.contact,
         address: this.address,
         email: this.email
       }
-    };
+    ];
+
+    sessionStorage.setItem('order', JSON.stringify(orderData));
   
-    console.log(orderData);
   
-    axios.post('http://localhost:3000/orders/checkout', orderData)
-      .then((response) => {
-        if (response.data.success) {
-          alert('Order placed successfully!');
-          this.router.navigate(['/dashboard']);
-          this.cartService.clearCart();
-        } else {
-          alert('Request failed: ' + (response.data.message || 'Unknown error'));
-        }
-      })
-      .catch((error) => {
-        alert('Request failed: ' + (error.response?.data?.message || 'Unknown error'));  
-      });
+    // axios.post('http://localhost:3000/orders/checkout', orderData)
+    //   .then((response) => {
+    //     if (response.data.success) {
+    //       alert('Order placed successfully!');
+    //       this.router.navigate(['/dashboard']);
+    //       this.cartService.clearCart();
+    //     } else {
+    //       alert('Request failed: ' + (response.data.message || 'Unknown error'));
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     alert('Request failed: ' + (error.response?.data?.message || 'Unknown error'));  
+    //   });
+
+    this.router.navigate(['/payment/4']);
   }
 }
+
+
+
+
+
+
+
+
+
+    // const orderData = {
+    //   cartItems: this.cartItems,
+    //   customerInfo: {
+    //     id: this.id,
+    //     name: this.name,
+    //     contact: this.contact,
+    //     address: this.address,
+    //     email: this.email
+    //   }
+    // };
+  
+  
+    // axios.post('http://localhost:3000/orders/checkout', orderData)
+    //   .then((response) => {
+    //     if (response.data.success) {
+    //       alert('Order placed successfully!');
+    //       this.router.navigate(['/dashboard']);
+    //       this.cartService.clearCart();
+    //     } else {
+    //       alert('Request failed: ' + (response.data.message || 'Unknown error'));
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     alert('Request failed: ' + (error.response?.data?.message || 'Unknown error'));  
+    //   });
