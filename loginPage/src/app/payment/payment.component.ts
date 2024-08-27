@@ -68,7 +68,7 @@ export class PaymentComponent implements OnInit {
     };
   
   
-    axios.post('http://localhost:3000/orders/checkout', orderData)
+    axios.post('https://adamkidukan-api.vercel.app/orders/checkout', orderData)
       .then((response) => {
         if (response.data.success) {
           alert('Order placed successfully!');
