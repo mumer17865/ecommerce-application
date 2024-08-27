@@ -9,13 +9,6 @@ body, html {
   font-family: 'Poppins', sans-serif;
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
 
 .center {
   background: rgba(255, 255, 255, 0.8);
@@ -32,12 +25,7 @@ h2 {
   color: #444;
 }
 
-form label {
-  display: block;
-  text-align: left;
-  margin-bottom: 0.5rem;
-  color: #333;
-}
+
 
 form input {
   width: calc(100% - 2rem);

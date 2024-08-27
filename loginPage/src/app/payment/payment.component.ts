@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CartService } from '../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
