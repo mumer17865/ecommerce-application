@@ -41,7 +41,7 @@ router.post("/create-order", async (req, res) => {
       },
     };
     console.log(customer);
-      order.setOrderId(314556516);
+      order.setOrderId(314556526);
     order.setCharges({
       sub_total: subTotal,
       discount: 0,
