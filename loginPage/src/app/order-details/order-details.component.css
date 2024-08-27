@@ -1,32 +1,3 @@
-.order-summary {
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 20px;
-    background-color: violet;
-    margin: 50px;
-    border-radius: 10px;
-    padding: 20px;
-    min-height: 80px;
-  }
-  
-  p{
-    display: flex;
-    float: inline-end;
-  }
-  
-  h3{
-    float: inline-start;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .total{
-    float: left;
-  }
-  
-  h1{
-    text-align: center;
-  }
-  
   table {
     width: 100%;
     border-collapse: collapse;

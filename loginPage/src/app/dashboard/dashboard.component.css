@@ -395,49 +395,6 @@ li a:hover {
   position: absolute;
   transform: translateY(-10%);
 }
-
-/* Custom Scrollbar Styles */
-/* .cart-box::-webkit-scrollbar {
-  width: 8px;
-}
-
-.cart-box::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.cart-box::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-.cart-box::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.cart-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.cart-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.cart-content::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-.cart-content::-webkit-scrollbar-thumb:hover {
-  background: #555;
-} */
-
-/* Remove horizontal scrollbar */
  .cart-box,
 .cart-content {
   overflow-x: hidden;
