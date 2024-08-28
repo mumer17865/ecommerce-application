@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors(
   {
-    origin: ["https://ecommerce-application-phi.vercel.app"],
+    origin: ["https://adamkidukan.vercel.app/login"],
     method: ["POST", "GET"],
     credentials: true,
   }
